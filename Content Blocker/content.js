@@ -1,3 +1,4 @@
+var badsites = [["Site","Score"]];
 var triggers = ["Nazi","Hitler","Holocaust"];
 
 function isLetter(str) {
@@ -5,6 +6,7 @@ function isLetter(str) {
 }
 
 // Adds all user-added words to list of words
+
 function getCustomWords() {
 
 	chrome.storage.sync.get("data", function(items) {
@@ -18,7 +20,6 @@ function getCustomWords() {
 		 	}
 		});
 }
-
 
 function findtrigs() {
 
@@ -46,6 +47,7 @@ function findtrigs() {
 								found++;
 								message += (" " + triggers[k] + ",");
 								triggers.splice(k,1); // Prevent from warning user about same word twice
+
 							}
 						}
 					}
@@ -58,8 +60,10 @@ function findtrigs() {
 		if(found === 1) {
 			message = message.slice(0, -1);
 		}
-		message += " and other triggering words.";
+		badsites.push([window.location.href,found]);
+		message += " and other triggering words." + "with " + found + " Instances on this site " + window.location.href + badsites;
 		alert(message);
+		arrayToCSV(badsites)	
 	}
 }
 
@@ -88,6 +92,27 @@ window.onload = function () {
     document.getElementById("dropdown").value = "";
 };
 
+function arrayToCSV (twoDiArray) {
+    //  Modified from: http://stackoverflow.com/questions/17836273/
+    //  export-javascript-data-to-csv-file-without-server-interaction
+    var csvRows = [];
+    for (var i = 0; i < twoDiArray.length; ++i) {
+        for (var j = 0; j < twoDiArray[i].length; ++j) {
+            twoDiArray[i][j] = '\"' + twoDiArray[i][j] + '\"';  // Handle elements that contain commas
+        }
+        csvRows.push(twoDiArray[i].join(','));
+    }
+
+    var csvString = csvRows.join('\r\n');
+    var a         = document.createElement('a');
+    a.href        = 'data:attachment/csv,' + csvString;
+    a.target      = '_blank';
+    a.download    = 'myFile.csv';
+
+    document.body.appendChild(a);
+    a.click();
+    // Optional: Remove <a> from <body> after done
+}
 document.addEventListener('DOMContentLoaded', function() {
 	findtrigs();
 	function addWord() {
