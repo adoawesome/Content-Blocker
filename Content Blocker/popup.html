@@ -1,13 +1,38 @@
 <!doctype html>
 <html>
   <head>
-    <title>Content Blocker</title>
-    <script src="popup.js"></script>
+    <title>Content King</title>
+    <script type="text/javascript" src="content.js"></script>
+    <style type="text/css" >
+		body {
+		  min-width: 400px;
+		  max-width: 100%;
+		  min-height: 100px;
+		  max-height: 100%;
+		  position: relative;
+		  vertical-align:middle;
+		  //background-color: #0DF4FF;
+		  background-color: #FFFFFF;
+		
+		  font-family: Arial;
+		  //border: 1px solid black;
+		  //padding: 5px;
+		}
+		h2 {
+			text-align: center;
+			color: #000000;
+
+		}
+		#footer {
+			text-align: right;
+		}
+	</style>
   </head>
   <body>
-    <h1>Content Blocker</h1>
-	<p> Content Score: </p>
-	<p> Safe for kids!</p>
-    <button id="checkPage">Check out more stats</button>
+    <h2>Content King</h2>
+    <p>Have full control of the content you want (and don't want) to see on the internet!</p>
+    <p>Currently Filtered words: <span><select id="dropdown"></select></span></p>
+	Add your own words: <input type="text" id="myText" value="">
+	<button id="add-Word">Add</button>
   </body>
 </html>

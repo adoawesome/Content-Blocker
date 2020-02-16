@@ -1,16 +1,21 @@
-
 {
-  "manifest_version": 2,
-
-  "name": "Content Reporter",
-  "description": "Blocks content lmao",
-  "version": "1.0",
-
-  "browser_action": {
-   "default_icon": "icon.png",
-   "default_popup": "popup.html"
-  },
-  "permissions": [
-   "activeTab"
-   ]
+	"manifest_version" : 2,
+	"name" : "Content King",
+	"description" : "Blocks objectionable Content on the Internet to Allow for a safer browsing experience",
+	"version" : "1.0",
+	"browser_action" : {
+			 "default_icon" : "icon.png",
+			 "default_popup": "popup.html"
+	},
+	"content_scripts": [{
+			   "matches": [
+			   "*://*/*"
+			   ],
+			   "js":[
+				"content.js"
+			   ]
+	}],
+	"permissions": [
+        "activeTab","tabs", "<all_urls>","storage"
+    ]
 }
