@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Content Blocker Stats</title>
+  <!-- <style>
+    table {
+        border-collapse: collapse;
+        border: 2px black solid;
+        font: 12px sans-serif;
+    }
+
+    td {
+        border: 1px black solid;
+        padding: 5px;
+    }
+</style> -->
+  <style>
+    table {
+        border-collapse: collapse;
+        border: 2px black solid;
+        font: 12px sans-serif;
+    }
+
+    td {
+        border: 1px black solid;
+        padding: 5px;
+    }
+  </style>
+</head>
+
+<body bgcolor="aliceblue">
+  <h1><center><b><font face="broadway" color="black" size="6">Content Blocker Statistics</font></b></center></h1>
+  <h2><center>Welcome to our website!</center></h2>
+  <p><center>This is where we will store the scores of what each website has.</center></p>
+ 
+  
+  <p>
+    <!-- <script src="d3.min.js?v=3.2.8"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+   
+<script>
+
+  function successFunction(data) {
+    
+      var allRows = data.split(/\r?\n|\r/);
+      var table = '<table>';
+      for (var singleRow = 0; singleRow < allRows.length; singleRow++) {
+        if (singleRow === 0) {
+          table += '<thead>';
+          table += '<tr>';
+        } else {
+          table += '<tr>';
+        }
+        var rowCells = allRows[singleRow].split(',');
+        for (var rowCell = 0; rowCell < rowCells.length; rowCell++) {
+          if (singleRow === 0) {
+            table += '<th>';
+            table += rowCells[rowCell];
+            table += '</th>';
+          } else {
+            table += '<td>';
+            table += rowCells[rowCell];
+            table += '</td>';
+          }
+        }
+        if (singleRow === 0) {
+          table += '</tr>';
+          table += '</thead>';
+          table += '<tbody>';
+        } else {
+          table += '</tr>';
+        }
+      } 
+      table += '</tbody>';
+      table += '</table>';
+      $('body').append(table);
+      
+    }
+    </script> 
+
+      <script>        
+      $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "data.csv",
+            dataType: "text",
+            success: function(data) {
+              console.log(data);
+              processData(data);
+              successFunction(data);
+            }
+         });
+    });
+    
+    function processData(allText) {
+      // console.log(allText);
+        var allTextLines = allText.split(/\r\n|\n/);
+        var headers = allTextLines[0].split(',');
+        var lines = [];
+    
+        for (var i=1; i<allTextLines.length; i++) {
+            var data = allTextLines[i].split(',');
+            if (data.length == headers.length) {
+    
+                var tarr = [];
+                for (var j=0; j<headers.length; j++) {
+                    tarr.push(headers[j]+":"+data[j]);
+                }
+                lines.push(tarr);
+            }
+        }
+        // alert(lines);
+    }</script>
+
+<style>
+table {
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid #d4d4d4;
+}
+ 
+tr:nth-child(even) {
+  background: #d4d4d4;
+}
+ 
+th, td {
+  padding: 10px 30px;
+}
+ 
+th {
+  border-bottom: 1px solid #d4d4d4;
+}</style>
+
+  </p>
+  <!-- <a href="formationQuiz.html">A link to something as need be</a> -->
+
+</body>
+
+</html>
